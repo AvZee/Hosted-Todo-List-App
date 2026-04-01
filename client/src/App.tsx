@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import './App.css'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
 
@@ -105,42 +106,48 @@ function App() {
   }
 
   return (
-    <main style={{ padding: "2rem", maxWidth: "600px", margin: "0 auto" }}>
-      <h1>Todo App</h1>
+    <main className="app">
+      <section className="todo-card">
+        <h1 className="app-title">Todo App</h1>
 
-      <form onSubmit={addTodo} style={{ marginBottom: "1rem" }}>
-        <input
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Enter a todo"
-          style={{ padding: "0.5rem", marginRight: "0.5rem", width: "70%" }}
-        />
-        <button type="submit">Add</button>
-      </form>
+        <form className="todo-form" onSubmit={addTodo}>
+          <input
+          className="todo-input"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Enter a todo"
+          />
+          <button className="primary-button" type="submit">Add</button>
+        </form>
 
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id} style={{ marginBottom: "0.5rem" }}>
-            <button onClick={() => toggleTodo(todo)} style={{ marginLeft: "0.5rem", marginRight: "0.5rem" }}>
-              {todo.completed ? "Mark Incomplete" : "Mark Complete"}
-            </button>
+        {todos.length === 0 ? (
+          <p className="empty-state">No todos yet. Add one above.</p>
+        ) : (
+          <ul className="todo-list">
+            {todos.map((todo) => (
+              <li className="todo-item" key={todo.id}>
+                <span className={`todo-text ${todo.completed ? 'completed' : ''}`}>
+                  {todo.text}
+                </span>
+                
+                <div className="todo-actions">
+                  <button className="secondary-button" onClick={() => toggleTodo(todo)}>
+                    {todo.completed ? "Mark Incomplete" : "Mark Complete"}
+                  </button>
 
-            <span
-              style={{
-                textDecoration: todo.completed ? "line-through" : "none",
-                opacity: todo.completed ? 0.6 : 1,
-                marginRight: "0.5rem",
-              }}
-            >
-              {todo.text}
-            </span>
+                  <button className="secondary-button" onClick={() => editTodo(todo)}>
+                    Edit
+                  </button>
 
-            <button onClick={() => editTodo(todo)} style={{ marginLeft: "0.1rem" }}>Edit</button>
-
-            <button onClick={() => deleteTodo(todo.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+                  <button className="delete-button" onClick={() => deleteTodo(todo.id)}>
+                    Delete
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
     </main>
   );
 }
