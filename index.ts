@@ -15,7 +15,7 @@ function middleware(handler: Handler): Handler {
         const start = Date.now();
 
         // Logging Middleware
-        console.log(`${req.method} ${url.pathname}`);
+        console.log(`[${req.method}] ${url.pathname}`);
 
         try {
             const res = await handler(req, url);
