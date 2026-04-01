@@ -39,9 +39,17 @@
   color: #c8bdeb;
 }
 
+.todo-input::placeholder {
+  color: #111827
+}
+
 .todo-input:focus {
   outline: 2px solid #8d86f0;
   outline-offset: 2px;
+}
+
+.todo-input:focus::placeholder {
+  opacity: 0.5;
 }
 
 .primary-button, .secondary-button, .delete-button {
@@ -114,7 +122,7 @@
 
 .empty-state {
   text-align: center;
-  color: #9ca3af;
+  color: #111827;
   margin: 12px 0 0;
 }
 
