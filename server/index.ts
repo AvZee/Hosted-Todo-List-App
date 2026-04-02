@@ -129,8 +129,6 @@ Bun.serve({
     async fetch(req): Promise<Response> {
         const url = new URL(req.url);
         const origin = req.headers.get("origin") || undefined;
-
-        console.log("REQUEST", req.method, url.pathname, "origin:", origin);
         
         if (req.method === "OPTIONS") {
             return addCorsHeaders(new Response(null, { status: 204 }), origin);
