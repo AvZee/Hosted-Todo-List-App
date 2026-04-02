@@ -31,10 +31,19 @@ function middleware(handler: Handler): Handler {
     }
 }
 
-function addCorsHeaders(res: Response) {
-    res.headers.set("Access-Control-Allow-Origin", "http://localhost:5173");
+function addCorsHeaders(res: Response, origin?: string): Response {
+    const allowedOrigins = [
+        "http://localhost:5173",
+        "https://hosted-todo-list-app.vercel.app/",
+    ];
+
+    if (origin && allowedOrigins.includes(origin)) {
+        res.headers.set("Access-Control-Allow-Origin", origin);
+    }
+
     res.headers.set("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
     res.headers.set("Access-Control-Allow-Headers", "Content-Type");
+    
     return res;
 }
 
@@ -109,14 +118,17 @@ const port = Number(process.env.PORT || 3000);
 Bun.serve({
     port,
     hostname: "0.0.0.0",
-    fetch(req) {
+    async fetch(req): Promise<Response> {
         const url = new URL(req.url);
+        const origin = req.headers.get("origin") || undefined;
 
         if (req.method === "OPTIONS") {
-            return addCorsHeaders(new Response(null, { status: 204 }));
+            return addCorsHeaders(new Response(null, { status: 204 }), origin);
         }        
 
-        return middleware(handler)(req, url);
+        const res = await middleware(handler)(req, url);
+
+        return addCorsHeaders(res, origin);
     },
 });
 
