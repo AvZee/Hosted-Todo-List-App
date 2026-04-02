@@ -32,13 +32,22 @@ function middleware(handler: Handler): Handler {
 }
 
 function addCorsHeaders(res: Response, origin?: string): Response {
-    const allowedOrigins = new Set([
+    console.log("addCorsHeaders called with origin:", origin);
+    
+    const allowedOrigins = [
         "http://localhost:5173",
         "https://hosted-todo-list-app.vercel.app/",
-    ]);
+    ];
 
-    if (origin && allowedOrigins.has(origin)) {
+    if (origin && allowedOrigins.includes(origin)) {
         res.headers.set("Access-Control-Allow-Origin", origin);
+    }
+
+    if (origin && allowedOrigins.includes(origin)) {
+        res.headers.set("Access-Control-Allow-Origin", origin);
+        console.log("CORS origin set to:", origin);
+    } else {
+        console.log("Origin not allowed:", origin);
     }
 
     res.headers.set("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
@@ -121,8 +130,8 @@ Bun.serve({
         const url = new URL(req.url);
         const origin = req.headers.get("origin") || undefined;
 
-        console.log("Incoming origin: ", origin);
-
+        console.log("REQUEST", req.method, url.pathname, "origin:", origin);
+        
         if (req.method === "OPTIONS") {
             return addCorsHeaders(new Response(null, { status: 204 }), origin);
         }        
