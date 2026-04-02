@@ -1,21 +1,17 @@
-# bun-react-template
+# Deployed Full-Stack ToDo List Application
 
-To install dependencies:
+Features persistent todo items that where new items can be added and existing items can be editted, deleted, or marked as complete/incomplete.
 
-```bash
-bun install
-```
+# Tech Stack
 
-To start a development server:
+Frontend: React (hosted on Vercel)
 
-```bash
-bun dev
-```
+Backend: Bun-based REST API
 
-To run for production:
+Database: PostgreSQL (hosted on Railway)
 
-```bash
-bun start
-```
+# Live Demo
 
-This project was created using `bun init` in bun v1.3.11. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
+Frontend: https://hosted-todo-list-app.vercel.app
+
+Backend API: https://hosted-todo-list-app-production.up.railway.app/todos
