@@ -36,7 +36,7 @@ function addCorsHeaders(res: Response, origin?: string): Response {
     
     const allowedOrigins = [
         "http://localhost:5173",
-        "https://hosted-todo-list-app.vercel.app/",
+        "https://hosted-todo-list-app.vercel.app",
     ];
 
     if (origin && allowedOrigins.includes(origin)) {
